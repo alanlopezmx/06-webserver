@@ -1,24 +1,36 @@
-var express = require('express')
-var app = express()
+var express = require('express');
+var app = express();
+const hbs = require('hbs');
 
 
-app.use(express.static(__dirname + '/public'))
- 
-// app.get('/', (req, res) => {
-//   //res.send('Hola mundo')
-//   let salida = {
-//     nombre: 'Alan',
-//     edad: 23,
-//     url: req.url,
-//     };
-//     res.send(salida);
+app.use(express.static(__dirname + '/public'));
 
-// });
-app.get('/data', (req, res) => {
-  res.send('Hola Data')
+hbs.registerPartials(__dirname + '/views/parciales');
+
+app.set('view engine', 'hbs');
+
+app.get('/', (req, res) => {
+    //res.send('Hola mundo')
+
+    res.render('home', {
+        nombre: 'Fernando',
+        anio: new Date().getFullYear(),
+    });
 
 });
- 
-app.listen(3000, () =>{
+app.get('/about', (req, res) => {
+    //res.send('Hola mundo')
+
+    res.render('about', {
+        anio: new Date().getFullYear(),
+    });
+
+});
+app.get('/data', (req, res) => {
+    res.send('Hola Data')
+
+});
+
+app.listen(3000, () => {
     console.log('Esuchando peticiones en el puerto 3000');
 });
